@@ -8,10 +8,10 @@ source = $(shell find $(src) -name *.c)
 objects = $(patsubst $(src)/%.c, $(obj)/%.o, $(source))
 
 cflags = 
-lflags =
+lflags = -lncurses
 
 $(exec): $(objects)
-	gcc -o $(lflags) $@ $^
+	gcc -o $@ $^ $(lflags)
 
 $(obj)/%.o: $(src)/%.c mkdirs
 	gcc -c $(cflags) -o $@ $<

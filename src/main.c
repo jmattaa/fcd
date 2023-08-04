@@ -2,48 +2,32 @@
 #include <dirent.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-int ListSubDirs(const char *path) 
-{
-    DIR *dir = opendir(path);
-    if (!dir) 
-    {
-        printf("Error opening directory: %s\n", path);
-        perror("Error opening directory");
-        exit(1);
-        return 1;
-    }
-
-    struct dirent *entry;
-    while ((entry = readdir(dir)) != NULL)
-    {
-        // make sure the entry is a directory not a file
-        if (entry->d_type == DT_DIR)
-        {
-            // skip the '.' and '..' directories
-            if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
-            {
-                printf("%s/%s\n", path, entry->d_name);
-                char subdirpath[512];
-                sprintf(subdirpath, "%s/%s", path, entry->d_name);
-                ListSubDirs(subdirpath);
-            }
-        }
-    }
-
-    closedir(dir);
-    return 0;
-}
+#include "include/dirs.h"
+#include "include/list_node.h"
 
 int main(int argc, char **argv)
 {
-    if (argc < 2) 
-    {
-        printf("Usage: fcd <directory>\n");
-        return 1;
-    }
+    //! do not forget to initialize with NULL!!!!!!
+    //! I HATE SIGSEGV
+    ListNode *Head = NULL;
 
-    ListSubDirs(argv[1]);
+    if (argc < 2)
+    {
+        char cwd[256];
+        if (getcwd(cwd, sizeof(cwd)) != NULL)
+            GetSubDirs(cwd, &Head);
+        else
+            GetSubDirs(".", &Head);
+    }
+    else
+        GetSubDirs(argv[1], &Head);
+
+    ListNode_PrintAll(Head);
+    
+    // Remove free memory
+    ListNode_RemoveAll(Head);
 
     return 0;
 }
