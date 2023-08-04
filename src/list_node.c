@@ -48,3 +48,23 @@ void ListNode_PrintAll(ListNode *head)
         current = current->next;
     }
 }
+
+ListNode *ListNode_Search(ListNode *head, const char *searchterm)
+{
+    ListNode *current = head;
+    ListNode *res = NULL;
+    while (current != NULL) 
+    {
+        if (strstr(current->data, searchterm) != NULL) 
+        {
+            const char *highlightedData = HighlightSubstr(current->data, searchterm);
+            ListNode_AddNode(&res, highlightedData);
+            free((void *)highlightedData);
+        }
+        current = current->next;
+    }
+
+    return res; // NULL if nothing is found 
+    // you see big brain
+}
+

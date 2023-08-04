@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "strstuff.h"
 
 /**
  * @brief Singly linked list
@@ -37,5 +38,14 @@ void ListNode_RemoveAll(ListNode *head);
  * @param head
  */
 void ListNode_PrintAll(ListNode *head);
+
+/**
+ * @brief Search for a substring in any list node
+ *
+ * @param head
+ * @param searchterm 
+ * @return ListNode* (A list node object that contains all the search results)
+ */
+ListNode *ListNode_Search(ListNode *head, const char *searchterm);
 
 #endif

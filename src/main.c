@@ -25,8 +25,12 @@ int main(int argc, char **argv)
         GetSubDirs(argv[1], &Head);
 
     ListNode_PrintAll(Head);
+
+    ListNode *Searched = ListNode_Search(Head, "test");
+    if (Searched != NULL)
+        ListNode_PrintAll(Searched);
     
-    // Remove free memory
+    // free memory
     ListNode_RemoveAll(Head);
 
     return 0;
