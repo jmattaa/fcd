@@ -44,7 +44,7 @@ void ListNode_PrintAll(ListNode *head)
     ListNode *current = head;
     while (current != NULL)
     {
-        printf("%s\n", current->data);
+        printf("%s\n\r", current->data);
         current = current->next;
     }
 }

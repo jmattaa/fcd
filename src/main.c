@@ -1,11 +1,16 @@
+#include <curses.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <ncurses.h>
 
 #include "include/dirs.h"
 #include "include/list_node.h"
+#include "include/mainrun.h"
 
 int main(int argc, char **argv)
 {
@@ -15,21 +20,15 @@ int main(int argc, char **argv)
 
     if (argc < 2)
     {
-        char cwd[256];
-        if (getcwd(cwd, sizeof(cwd)) != NULL)
-            GetSubDirs(cwd, &Head);
-        else
-            GetSubDirs(".", &Head);
+        // if no arguments, use home directory
+        struct passwd *pw = getpwuid(getuid());
+        GetSubDirs(pw->pw_dir, &Head);
     }
     else
         GetSubDirs(argv[1], &Head);
 
-    ListNode_PrintAll(Head);
+    MainRun(Head);
 
-    ListNode *Searched = ListNode_Search(Head, "test");
-    if (Searched != NULL)
-        ListNode_PrintAll(Searched);
-    
     // free memory
     ListNode_RemoveAll(Head);
 
