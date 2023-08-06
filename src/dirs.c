@@ -19,7 +19,7 @@ void GetSubDirs(const char *path, ListNode **head)
             // skip the '.' and '..' directories
             if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
             {
-                char subdirpath[512];
+                char subdirpath[2048];
                 sprintf(subdirpath, "%s/%s", path, entry->d_name);
 
                 ListNode_AddNode(head, subdirpath);

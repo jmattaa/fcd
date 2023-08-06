@@ -14,6 +14,10 @@
 typedef struct list_node
 {
     char *data;
+    
+    // pointer to the last node in the list so we can append to the list
+    struct list_node *last;
+
     struct list_node *next;
 } ListNode;
 
@@ -25,6 +29,15 @@ typedef struct list_node
  * @return ListNode*
  */
 ListNode *ListNode_AddNode(ListNode **head, const char *data);
+
+/**
+ * @brief Adds a node to the end of the linked list
+ *
+ * @param head
+ * @param data
+ * @return ListNode*
+ */
+ListNode *ListNode_AppendNode(ListNode **head, const char *data);
 
 /**
  * @brief Removes all nodes from the linked list

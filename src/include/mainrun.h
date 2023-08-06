@@ -4,6 +4,7 @@
 #include "list_node.h"
 #include <ncurses.h>
 #include <string.h>
+#include <unistd.h>
 
 void MainRun(ListNode *head);
 

@@ -1,6 +1,9 @@
 #include "include/mainrun.h"
 #include "include/list_node.h"
 #include "include/strstuff.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 void MainRun(ListNode * head) 
 {
@@ -33,7 +36,8 @@ void MainRun(ListNode * head)
     char search_text[512] = "";
     int ch;
 
-    int selected_index = 0;
+    int selected_index = 1;
+    int max_index = 0;
     ListNode *selected_dir = NULL;
 
     // hacky solution to show bar because it only shows when a key is pressed for some weird reason
@@ -69,36 +73,53 @@ void MainRun(ListNode * head)
         } 
         else if (ch == KEY_DOWN) 
         {
-            if (selected_index < main_height - padding) 
+            if (selected_index < max_index - 1) 
             {
                 selected_index++;
             }
         }
         else if (ch == '\n' && selected_index > 0) 
         {
-            // cd into selected directory and exit loop
             if (selected_dir != NULL)
+            {
+                FILE *outputFile = fopen("./output.txt", "w");
+                if (outputFile == NULL) 
+                {
+                    perror("Error opening file");
+                    break;
+                }
+                fprintf(outputFile, "%s", selected_dir->data); 
                 break;
+            }
         }
-        
+
+        if (selected_index > max_index - 1)
+            selected_index = 1;
+
+        werase(main_win);
+
         ListNode *search = ListNode_Search(head, search_text);
-        ListNode *current = search;
-        int current_index = 0;
-        while (current != NULL && current_index < main_height) // only show what can be shown on screen
+        int current_index = 1;
+        while (search != NULL && current_index < main_height) // only show what can be shown on screen
         {
+            // move the cursor to the correct position
+            wmove(main_win, current_index, 1);
             if (current_index == selected_index)
             {
+                // move text?? cool effect?? idk
+                wmove(main_win, current_index, padding * 2);
                 // print full string with highlight and set it to variable
-                PrintFullStringHighlight(current->data, main_win);
-                selected_dir = current;
+                PrintFullStringHighlight(search->data, main_win);
+                selected_dir = search;
             }
             else
                 // display normally 
-                PrintHighlightedString(current->data, main_win);
+                wprintw(main_win, "%s", search->data);
 
-            current = current->next;
+            search = search->next;
             current_index++;
         }
+        max_index = current_index;
 
         wborder(main_win, 
                     ACS_VLINE, ACS_VLINE, 
@@ -118,6 +139,8 @@ void MainRun(ListNode * head)
         );
         mvwprintw(search_win, 1, 1, "Search: %s", search_text);
         wrefresh(search_win);
+
+        refresh();
     }
 
 

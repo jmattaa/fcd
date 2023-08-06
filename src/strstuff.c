@@ -10,11 +10,11 @@ const char *HighlightSubstr(const char *source, const char *substring)
         size_t substringLength = strlen(substring);
         size_t prefixLength = start - source;
 
-        char *highlighted = (char *)malloc(strlen(source) + 16 + 1); // 16 for escape codes, +1 for null terminator
+        char *highlighted = (char *)malloc(strlen(source) + 4 + 1); // 4 for escape codes, +1 for null terminator
         // me very smart
         // \x1Bo = on 
         // \x1Bn = off
-        sprintf(highlighted, "%.*s\x1Bo%.*s\x1Bn%s\n",
+        sprintf(highlighted, "%.*s\x1Bo%.*s\x1Bn%s",
                 (int)prefixLength, source, (int)substringLength, start, start + substringLength);
 
         return highlighted;

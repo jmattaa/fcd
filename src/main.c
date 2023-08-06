@@ -12,6 +12,8 @@
 #include "include/list_node.h"
 #include "include/mainrun.h"
 
+// BUG the selected directory contains escape characters that turn on and off coloring 
+
 int main(int argc, char **argv)
 {
     //! do not forget to initialize with NULL!!!!!!
@@ -28,6 +30,7 @@ int main(int argc, char **argv)
         GetSubDirs(argv[1], &Head);
 
     MainRun(Head);
+
 
     // free memory
     ListNode_RemoveAll(Head);

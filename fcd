@@ -1,0 +1,6 @@
+#!/bin/bash
+
+~/fcd/fchangedir
+export output="$(cat ./output.txt)"
+rm ./output.txt
+cd $output
