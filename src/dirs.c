@@ -5,8 +5,8 @@ void GetSubDirs(const char *path, ListNode **head)
     DIR *dir = opendir(path);
     if (!dir) 
     {
-        printf("Error opening directory: %s\n\r", path);
-        perror("\rError");
+        //printf("Error opening directory: %s\n\r", path);
+        //perror("\rError");
         return;
     }
 

@@ -4,7 +4,7 @@ obj = $(build)/obj
 
 exec = fchangedir
 fcd = fcd
-fcdDIR = ~/fcd
+fcdDIR = ~/.fcd
 
 source = $(shell find $(src) -name *.c)
 objects = $(patsubst $(src)/%.c, $(obj)/%.o, $(source))
