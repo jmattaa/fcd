@@ -1,6 +1,7 @@
 #include "include/dirs.h"
+#include <pthread.h>
 
-void GetSubDirs(const char *path, ListNode **head) 
+void GetSubDirs(const char *path, ListNode **head, pthread_mutex_t *mutex) 
 {
     DIR *dir = opendir(path);
     if (!dir) 
@@ -22,11 +23,15 @@ void GetSubDirs(const char *path, ListNode **head)
                 char subdirpath[2048];
                 sprintf(subdirpath, "%s/%s", path, entry->d_name);
 
+                pthread_mutex_lock(mutex);
                 ListNode_AddNode(head, subdirpath);
-                GetSubDirs(subdirpath, head);
+                pthread_mutex_unlock(mutex);
+
+                GetSubDirs(subdirpath, head, mutex);
             }
         }
     }
 
     closedir(dir);
 }
+

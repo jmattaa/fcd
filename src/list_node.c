@@ -1,5 +1,6 @@
 #include "include/list_node.h"
 
+
 ListNode *ListNode_AddNode(ListNode **head, const char *data)
 { 
     ListNode *new_node = malloc(sizeof(ListNode));
@@ -73,7 +74,7 @@ void ListNode_PrintAll(ListNode *head)
     }
 }
 
-// TODO: implement aprox search matching algorithm
+// TODO: implement a aprox search matching algorithm
 ListNode *ListNode_Search(ListNode *head, const char *searchterm)
 {
     ListNode *current = head;
@@ -81,13 +82,14 @@ ListNode *ListNode_Search(ListNode *head, const char *searchterm)
     while (current != NULL) 
     {
         char *str = current->data;
-        if (strstr(str, searchterm) != NULL) 
+        if (strstr(str, searchterm))
         {
             // Add highlight 
             //! BEWARE the highlight plays with the string 
             // so i just removed it
             ListNode_AddNode(&res, str);
         }
+
         current = current->next;
     }
 
