@@ -194,8 +194,5 @@ int main(int argc, char **argv)
     // Free memory
     ListNode_RemoveAll(threadData.Head);
 
-    // Wait for the background thread to finish
-    pthread_join(backgroundThread, NULL);
-
     return 0;
 }
