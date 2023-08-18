@@ -1,5 +1,5 @@
-build = bin
-src = src
+build = ./bin
+src = ./src
 obj = $(build)/obj
 
 exec = fchangedir
@@ -10,7 +10,7 @@ source = $(shell find $(src) -name *.c)
 objects = $(patsubst $(src)/%.c, $(obj)/%.o, $(source))
 
 cflags =
-lflags = -lncurses 
+lflags = -lncurses -lpthread
 
 install: $(build)/$(exec)
 	mkdir -p $(fcdDIR) 

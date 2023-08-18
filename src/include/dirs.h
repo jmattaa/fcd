@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
+#include <sys/types.h>
 
 void GetSubDirs(const char *path, ListNode **head, pthread_mutex_t *mutex);
 
