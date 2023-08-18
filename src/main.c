@@ -82,7 +82,7 @@ int main(int argc, char **argv)
     {
         ch = getch();
 
-        if (ch == KEY_BACKSPACE) 
+        if (ch == KEY_BACKSPACE || ch == KEY_DC || ch == 127)
         {
             int len = strlen(search_text);
             if (len > 0) 
